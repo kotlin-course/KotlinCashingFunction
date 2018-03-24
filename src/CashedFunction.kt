@@ -6,33 +6,21 @@ import kotlin.math.abs
 typealias LongFunc = (Long) -> Long
 
 fun main(args: Array<String>) {
+
+    val N :Long = 92 // Largest fibonacci in a long, Using the Y-combinator style
+    val fibN = cache(::fib)(N)
+    println("CachFibonacci of $N is $fibN")
+    val bigN : Long = 200
+    println("Big Fibonacci of $bigN is ${rawFibonacci(bigN)}")
+
+    // Using the Y-combinator style
     print("Factorial(1..10)   : ")
     for (i in 1L..10L) print("${cache(::fac)(i)}  ")
     print("\nFibonacci(1..10)   : ")
     for (i in 1L..10L) print("${cache(::fib)(i)}  ")
     println()
-    val N :Long = 92 // Largest fibonacci in a long
-    val fibN = cache(::fib)(N)
-    println("CachFibonacci of $N is $fibN")
-    val bigN : Long = 200
-    println("Big Fibonacci of $bigN is ${rawFibonacci(bigN)}")
 }
-
-fun cashingFibonacci(N:Long):BigInteger{
-    val cache=Cache<Long,BigInteger>()
-    fun fib (N: Long):BigInteger{
-        val c = cache.get(N)
-        if ( c != null)
-            return c
-        else {
-            val res = fib(N-1)+fib(N-2)
-            cache.set(N, res)
-            return res
-        }
-    }
-    return fib(N)
-}
-
+// Plain iterative Fibonacci function
 fun rawFibonacci(N:Long):BigInteger{
     if ( N <= 1L) return N.toBigInteger();
     var terms = Pair(BigInteger.ZERO,BigInteger.ONE)
@@ -44,7 +32,8 @@ fun rawFibonacci(N:Long):BigInteger{
     return terms.second
 }
 
-
+// This is the head-ache inducing Y-combinator adapted from
+// https://rosettacode.org/wiki/Y_combinator#Kotlin
 fun cache(f: (LongFunc) -> LongFunc): LongFunc {
     val cache = LongCache()
     class RecursiveFunc(val function: (RecursiveFunc) -> LongFunc)
