@@ -9,22 +9,22 @@ import org.testng.annotations.Test
  */
 class CacheTest {
     @Test fun nothingThere() {
-        var c = LongCache()
+        val c = LongCache()
         assertNull(c.get(10L))
     }
     @Test fun inAndOut() {
-        var c = LongCache()
+        val c = LongCache()
         c.set(10L, 200L)
         assertEquals(200L, c.get(10L))
     }
     @Test fun override() {
-        var c = LongCache()
+        val c = LongCache()
         c.set(10L, 200L)
         c.set(10L, 300L)
         assertEquals(300L, c.get(10L))
     }
     @Test fun collision() {
-        var c = LongCache(1)
+        val c = LongCache(1)
         c.set(10L, 200L)
         c.set(20L, 400L)
         assertNull(c.get(10L))
