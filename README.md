@@ -20,7 +20,7 @@ Adding an argument to the `caching` function:
 
 ```kotlin
 fun <T,R> cached(value: T, body: () -> R) : R {
-  // check if value is in cache
+  // check if value is in cache, if not:
   val result = body()
   // save result in cache
   return result
