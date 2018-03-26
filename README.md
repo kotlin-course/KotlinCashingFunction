@@ -16,5 +16,21 @@ In the functional programming world it can be solved using a ["Y-combinator"](ht
 
 The general issue is also related to the deeper semantics of `this`. Wikipediad has a page on [Anonymous recursion](https://en.wikipedia.org/wiki/Anonymous_recursion) that also show this to be a strangely hard problem.
 
+Adding an argument to the `caching` function:
+
+```kotlin
+fun <T,R> cached(value: T, body: () -> R) : R {
+  // check if value is in cache
+  val result = body()
+  // save result in cache
+  return result
+  }
+
+fun fib(n: Long): Long = cached(n) {
+  if (n < 2) n
+  else fib(n - 1) + fib(n - 2)
+  }
+```
+
 
 
